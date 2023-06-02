@@ -1,5 +1,6 @@
 package com.example.May2023.Controller;
 
+import com.example.May2023.Service.CalculateRestService;
 import com.example.May2023.Service.CalculatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -81,5 +82,13 @@ public class CalculateController {
     ){
         System.out.println("Inside Calculator Controller");
         return new ResponseEntity<>(cService.ci(p, r, n, t), HttpStatus.OK);
+    }
+
+    @Autowired
+    CalculateRestService restService;
+
+    @GetMapping("/rest/add")
+    public double add(){
+        return restService.calculateAddtion();
     }
 }
