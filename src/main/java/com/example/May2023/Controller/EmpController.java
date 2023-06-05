@@ -2,6 +2,7 @@ package com.example.May2023.Controller;
 
 import com.example.May2023.Model.Emp;
 import com.example.May2023.Service.EmpService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
@@ -60,12 +61,12 @@ public class EmpController {
     }
 
     @PostMapping("/add")
-    public void addEmp(@RequestBody Emp emp){
+    public void addEmp(@RequestBody Emp emp) throws JsonProcessingException {
           eService.upsert(emp);
     }
 
     @PutMapping("/update")
-    public void updateEmp(@RequestBody Emp emp){
+    public void updateEmp(@RequestBody Emp emp) throws JsonProcessingException {
         eService.upsert(emp);
     }
 

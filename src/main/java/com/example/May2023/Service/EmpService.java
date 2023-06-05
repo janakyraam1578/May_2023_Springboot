@@ -1,7 +1,10 @@
 package com.example.May2023.Service;
 
+import com.example.May2023.Config.KafkaProducerConfiguration;
+import com.example.May2023.Kafka.KafkaProducerService;
 import com.example.May2023.Model.Emp;
 import com.example.May2023.Repository.EmpRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
@@ -21,6 +24,11 @@ public class EmpService {
 
     @Autowired
     EmpRepository eRepo;
+
+    @Autowired
+    KafkaProducerService kafka;
+
+
     public List<Emp> getAllEmpDetails(){
         return eRepo.findAll(); //select * from emp;
     }
@@ -43,8 +51,9 @@ public class EmpService {
 
     }
 
-    public void upsert(Emp emp){ //Update or Insert
-        eRepo.save(emp); //insert into emp values(????)
+    public void upsert(Emp emp) throws JsonProcessingException { //Update or Insert
+        kafka.sendSimpleMessage(emp);
+        //eRepo.save(emp); //insert into emp values(????)
         //if the record is present, it will perform update operation
         //if the record is NOT present, it will perform insertion
     }
